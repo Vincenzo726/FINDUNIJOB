@@ -25,6 +25,7 @@ Set `MONGODB_URI` and a long random `JWT_SECRET` in `.env`. The API listens on `
 - `GET /api/applications/received`, `PATCH /api/applications/:id/status` (companies)
 - `GET/POST/DELETE /api/cvs` (students; multipart field `cv`)
 - `POST /api/ai/chat` (authenticated users; requires Gemma configuration)
+- `GET /api/ai/conversations`, `GET/DELETE /api/ai/conversations/:id`
 - `POST /api/ai/career-guidance`
 - `POST /api/ai/cv-analysis`
 - `POST /api/ai/cv-improvement`
@@ -44,7 +45,7 @@ GEMMA_API_URL=https://generativelanguage.googleapis.com/v1beta
 GEMMA_MODEL=gemma-4-26b-a4b-it
 ```
 
-The key is sent only as the `x-goog-api-key` request header from the backend. The frontend calls authenticated backend endpoints and never receives the key. `npm run test:live-ai` runs a real provider request only when all three variables are configured; otherwise it skips safely.
+The key is sent only as the `x-goog-api-key` request header from the backend. The frontend calls authenticated backend endpoints and never receives the key. `npm test` runs deterministic provider mocks; `npm run test:live-ai` runs a real provider request only when all three variables are configured.
 
 ## Security
 

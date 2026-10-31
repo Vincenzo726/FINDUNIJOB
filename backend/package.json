@@ -4,7 +4,7 @@
   "description": "FindUniJob backend API",
   "main": "src/server.js",
   "scripts": {
-    "test": "node --test test/*.test.js",
+    "test": "node --test test/health.test.js test/gemma.service.test.js",
     "test:live-ai": "node --test test/gemma.live.test.js",
     "start": "node src/server.js",
     "dev": "node --watch src/server.js"

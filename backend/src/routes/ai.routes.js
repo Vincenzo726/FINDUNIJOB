@@ -1,6 +1,9 @@
 const router = require('express').Router(); const rateLimit = require('express-rate-limit'); const controller = require('../controllers/ai.controller'); const { authenticate } = require('../middleware/auth.middleware');
 router.use(authenticate, rateLimit({ windowMs: 15 * 60 * 1000, limit: 30 }));
 router.post('/chat', controller.chat);
+router.get('/conversations', controller.listConversations);
+router.get('/conversations/:id', controller.getConversationById);
+router.delete('/conversations/:id', controller.deleteConversation);
 router.post('/career-guidance', controller.careerGuidance);
 router.post('/cv-analysis', controller.analyzeCv);
 router.post('/cv-improvement', controller.improveCv);

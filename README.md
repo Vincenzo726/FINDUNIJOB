@@ -7,7 +7,7 @@ FindUniJob is a career platform for university talent. The repository contains a
 - `src/` - React frontend
 - `backend/` - Express API, models, authentication, applications, CV uploads, and optional Gemma integration
 
-The frontend is connected to the backend for live jobs, authentication, profiles, applications, company job publishing, application management, and the authenticated career assistant.
+The frontend is connected to the backend for live jobs, authentication, profiles, CV uploads, applications, company job publishing and management, application management, and the authenticated persistent career assistant. The assistant searches published MongoDB jobs and displays matching records without inventing vacancies.
 
 For backend setup, API routes, environment variables, security notes, and test instructions, see [backend/README.md](./backend/README.md).
 
