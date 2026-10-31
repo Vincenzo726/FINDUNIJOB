@@ -14,7 +14,8 @@ const { notFound, errorHandler } = require('./middleware/error.middleware');
 
 const app = express();
 app.use(helmet());
-const allowedOrigins = (process.env.FRONTEND_URL || '').split(',').map((origin) => origin.trim()).filter(Boolean);
+const configuredOrigins = (process.env.FRONTEND_URL || '').split(',').map((origin) => origin.trim()).filter(Boolean);
+const allowedOrigins = [...new Set([...configuredOrigins, 'http://localhost:5173', 'http://127.0.0.1:5173'])];
 app.use(cors({ origin: allowedOrigins.length ? (origin, callback) => callback(null, !origin || allowedOrigins.includes(origin)) : true }));
 app.use(express.json({ limit: '1mb' }));
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, limit: 300, standardHeaders: true }));
