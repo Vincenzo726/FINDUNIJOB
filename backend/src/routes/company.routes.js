@@ -1,0 +1,2 @@
+const router = require('express').Router(); const controller = require('../controllers/company.controller'); const { authenticate, authorize } = require('../middleware/auth.middleware');
+router.use(authenticate, authorize('COMPANY')); router.get('/me', controller.get); router.patch('/me', controller.update); module.exports = router;

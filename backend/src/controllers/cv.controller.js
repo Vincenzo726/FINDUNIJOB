@@ -1,0 +1,7 @@
+const fs = require('fs/promises');
+const CV = require('../models/CV');
+const Student = require('../models/Student');
+async function list(req, res) { const student = await Student.findOne({ user: req.user._id }); res.json({ success: true, data: await CV.find({ student: student?._id }).select('-storagePath -parsedData').sort({ createdAt: -1 }) }); }
+async function upload(req, res) { if (!req.file) return res.status(400).json({ success: false, message: 'A PDF or DOCX file is required' }); const student = await Student.findOne({ user: req.user._id }); const cv = await CV.create({ student: student._id, originalName: req.file.originalname, filename: req.file.filename, mimeType: req.file.mimetype, size: req.file.size, storagePath: req.file.path }); await Student.updateOne({ _id: student._id }, { cv: cv._id }); res.status(201).json({ success: true, data: cv }); }
+async function remove(req, res) { const student = await Student.findOne({ user: req.user._id }); const cv = await CV.findOneAndDelete({ _id: req.params.id, student: student?._id }); if (!cv) return res.status(404).json({ success: false, message: 'CV not found' }); await fs.unlink(cv.storagePath).catch((error) => { if (error.code !== 'ENOENT') throw error; }); res.json({ success: true, message: 'CV deleted' }); }
+module.exports = { list, upload, remove };

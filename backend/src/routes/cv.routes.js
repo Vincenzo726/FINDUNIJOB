@@ -1,0 +1,2 @@
+const router = require('express').Router(); const controller = require('../controllers/cv.controller'); const { authenticate, authorize } = require('../middleware/auth.middleware'); const { upload } = require('../middleware/upload.middleware');
+router.use(authenticate, authorize('STUDENT')); router.get('/', controller.list); router.post('/', upload.single('cv'), controller.upload); router.delete('/:id', controller.remove); module.exports = router;

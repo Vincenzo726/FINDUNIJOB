@@ -1,0 +1,2 @@
+const router = require('express').Router(); const rateLimit = require('express-rate-limit'); const controller = require('../controllers/ai.controller'); const { authenticate } = require('../middleware/auth.middleware');
+router.use(authenticate, rateLimit({ windowMs: 15 * 60 * 1000, limit: 30 })); router.post('/chat', controller.chat); module.exports = router;
