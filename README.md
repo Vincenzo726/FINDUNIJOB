@@ -7,6 +7,8 @@ FindUniJob is a career platform for university talent. The repository contains a
 - `src/` - React frontend
 - `backend/` - Express API, models, authentication, applications, CV uploads, and optional Gemma integration
 
+The frontend is connected to the backend for live jobs, authentication, profiles, applications, company job publishing, application management, and the authenticated career assistant.
+
 For backend setup, API routes, environment variables, security notes, and test instructions, see [backend/README.md](./backend/README.md).
 
 ```powershell
@@ -16,4 +18,6 @@ npm install
 npm run dev
 ```
 
-Configure MongoDB and a strong `JWT_SECRET` before starting the API. The frontend currently contains sample job data; connecting it to the API is a separate integration step.
+Configure MongoDB and a strong `JWT_SECRET` before starting the API. The frontend uses live job data from the backend API.
+
+The Google Gemini API key is server-only. Configure it in `backend/.env`; never add it to Vite variables or commit it.

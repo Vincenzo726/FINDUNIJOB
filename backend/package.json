@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "test": "node --test test/*.test.js",
+    "test:live-ai": "node --test test/gemma.live.test.js",
     "start": "node src/server.js",
     "dev": "node --watch src/server.js"
   },

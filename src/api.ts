@@ -47,4 +47,5 @@ export const api = {
   received: () => request<Application[]>('/applications/received'),
   createJob: (body: Partial<Job>) => request<Job>('/jobs', { method: 'POST', body: JSON.stringify(body) }),
   updateApplication: (id: string, status: string) => request<Application>(`/applications/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
+  aiChat: (prompt: string) => request<{ response: string }>('/ai/chat', { method: 'POST', body: JSON.stringify({ prompt }) }),
 }

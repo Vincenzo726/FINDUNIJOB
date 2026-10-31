@@ -25,12 +25,26 @@ Set `MONGODB_URI` and a long random `JWT_SECRET` in `.env`. The API listens on `
 - `GET /api/applications/received`, `PATCH /api/applications/:id/status` (companies)
 - `GET/POST/DELETE /api/cvs` (students; multipart field `cv`)
 - `POST /api/ai/chat` (authenticated users; requires Gemma configuration)
+- `POST /api/ai/career-guidance`
+- `POST /api/ai/cv-analysis`
+- `POST /api/ai/cv-improvement`
+- `POST /api/ai/job-recommendations`
 
 Send JWTs as `Authorization: Bearer <token>`. Logout is stateless: clients must discard the token. Passwords are hashed with bcrypt and are never returned.
 
-## Uploads and AI
+## Uploads and Google Gemma AI
 
-CV uploads accept PDF and DOCX files up to `MAX_FILE_SIZE_MB`. Local disk storage is intentionally an MVP adapter and is not durable on most cloud deployments; configure a persistent or object-storage adapter before production. Configure `GEMMA_API_KEY`, `GEMMA_API_URL`, and `GEMMA_MODEL` to enable AI. The service expects a JSON API compatible with a prompt request and reads `response`, `text`, or an OpenAI-style choice.
+CV uploads accept PDF and DOCX files up to `MAX_FILE_SIZE_MB`. Local disk storage is intentionally an MVP adapter and is not durable on most cloud deployments; configure a persistent or object-storage adapter before production.
+
+The AI service uses the Google Gemini `generateContent` REST API. Configure these server-only variables:
+
+```env
+GEMMA_API_KEY=your-google-ai-studio-key
+GEMMA_API_URL=https://generativelanguage.googleapis.com/v1beta
+GEMMA_MODEL=gemma-4-26b-a4b-it
+```
+
+The key is sent only as the `x-goog-api-key` request header from the backend. The frontend calls authenticated backend endpoints and never receives the key. `npm run test:live-ai` runs a real provider request only when all three variables are configured; otherwise it skips safely.
 
 ## Security
 
